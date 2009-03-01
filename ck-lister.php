@@ -1,4 +1,4 @@
-<?php // ck-lister v0.1.0 by, Chris Kankiewicz (http://www.chriskankiewicz.com)
+<?php // ck-lister v0.1.0 by, Chris Kankiewicz (http://www.web-geek.com)
 
   //define the path as relative
   $path = getcwd();
