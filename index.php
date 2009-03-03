@@ -1,5 +1,15 @@
 <?php // ck-lister v0.2.0 by, Chris Kankiewicz (http://www.web-geek.com)
+  
+  // Files and directories that will not be listed
+  $hidden = array(
+    'ck-lister',
+    'index.php',
+    '.htaccess',
+    '.htpasswd',
+  );
 
+  // *** DO NOT EDIT ANYTHING BELOW UNLESS YOU ARE A PHP NINJA ***
+  
   // Get path if set otherwise get relative path
   if (isset($_GET['dir']) && strpos("..",$dir,0) !== 0) {
     $dir = $_GET['dir'];
@@ -12,14 +22,6 @@
   if(substr($path,-1,1) != '/') {
     $path = $path . '/';
 	}
-  
-  // Files and directories that will not be listed
-  $hidden = array(
-    'ck-lister',
-    'index.php',
-    '.htaccess',
-    '.htpasswd',
-  );
 
   // Open directory handle for reading
   $dirHandle = @opendir($path) or die("Unable to open $path");
@@ -60,11 +62,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <title>Directory listing of <?php echo(dirname($_SERVER['PHP_SELF'])."/$path"); ?></title>
+  <title>
+    Directory listing of 
+    <?php
+      if ($path == './') {
+        echo(dirname($_SERVER['PHP_SELF'])); 
+      } else {
+        echo(dirname($_SERVER['PHP_SELF'])."/$path"); 
+      }
+    ?>
+  </title>
   <link rel="stylesheet" type="text/css" href="ck-lister/css/reset.css" />
   <link rel="stylesheet" type="text/css" href="ck-lister/css/style.css" />
-  <!--[if IE]><link rel="stylesheet" href="ck-lister/css/ie-fixes.css" type="text/css" /><![endif]-->
-  <!--[if lte IE 6]><link rel="stylesheet" href="ck-lister/css/ie6-fixes.css" type="text/css" /><![endif]-->
 </head>
 
 <body>
@@ -95,7 +104,7 @@
       $bg = "dark-bg";
     }
     
-    if ($name === '..') {
+    if ($name == '..') {
       $pathArray = explode("/","$path$name"); 
       unset($pathArray[count($pathArray)-1]);
       unset($pathArray[count($pathArray)-1]);
