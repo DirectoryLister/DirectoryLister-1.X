@@ -100,14 +100,14 @@ body {
 #ck-footer .footer-left {
   float: left;
   margin: 3px;
-  width: 49%;
+  width: 78%;
 }
 
 #ck-footer .footer-right {
   float: right;
   margin: 3px;
   text-align: right;
-  width: 49%;
+  width: 20%;
 }
 
 #ck-footer a {

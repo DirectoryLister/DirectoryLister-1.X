@@ -112,6 +112,7 @@
 
     if (is_dir("$path/$name")) {
       echo("    <a href=\"?dir=$path$name\">\r\n");
+      $icon = 'folder.png';
     } else {
       echo("    <a href=\"$path$name\">\r\n");
     }
@@ -129,9 +130,17 @@
 
   <div id="ck-footer">
     <span class="footer-left">
-      &copy; 2009
-      <strong>&middot;</strong> Chris Kankiewicz
-      <strong>&middot;</strong> Some Rights Reserved
+      <a href="<?=$_SERVER['PHP_SELF'];?>">Home</a>
+      <?php
+        $breadCrumbs = split('/', $path);
+        if(($bsize = sizeof($breadCrumbs))>0) {
+          $sofar = '';
+          for($bi=0;$bi<($bsize-1);$bi++) {
+            $sofar = $sofar . $breadCrumbs[$bi] . '/';
+            echo ' &gt; <a href="'.$_SERVER['PHP_SELF'].'?dir='.$sofar.'">'.$breadCrumbs[$bi].'</a>';
+          }
+        }
+      ?>
     </span>
     <span class="footer-right">
       Powered by,
