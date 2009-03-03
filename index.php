@@ -1,33 +1,58 @@
-<?php // ck-lister v0.1.0 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.2.0 by, Chris Kankiewicz (http://www.web-geek.com)
 
   // Get path if set otherwise get relative path
-  if (isset($_GET['dir'])) {
+  if (isset($_GET['dir']) && strpos("..",$dir,0) !== 0) {
     $dir = $_GET['dir'];
   } else {
     $dir = '.';
-  }
+  }  
 
   $path = $path . $dir;
 
   if(substr($path,-1,1) != '/') {
     $path = $path . '/';
 	}
+  
+  // Files and directories that will not be listed
+  $hidden = array(
+    'ck-lister',
+    'index.php',
+    '.htaccess',
+    '.htpasswd',
+  );
 
   // Open directory handle for reading
   $dirHandle = @opendir($path) or die("Unable to open $path");
   if ($dirHandle = opendir($path)) {
     while ($file = readdir($dirHandle)) {
-      if ($file !== '.') {
+    
+      if (is_dir("$path$file") && $file !== '.') {
+        if ($file == '..' && !isset($_GET['dir'])) {
+          continue;
+        } else {
+          if (!in_array($file,$hidden)) {
+            $dirArray[] = array (
+              "name" => $file,
+              "size" => '-',
+              "time" => filemtime("$path$file")
+            );
+          }
+        }
+      }
+      
+      if (!is_dir("$path$file") && !in_array($file,$hidden)) {
         $fileArray[] = array (
-          "icon" => $icon,
           "name" => $file,
           "size" => round(filesize("$path$file")/1024),
           "time" => filemtime("$path$file")
         );
       }
+      
     }
   closedir($dirHandle);
   }
+  
+  asort($dirArray);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -53,7 +78,50 @@
   </div>
 
   <!-- BEGIN DIRECTORY LISTING -->
-<?php // Echo directory list list
+<?php
+  $n = 0; // Alternating BG color marker
+
+  // List directories
+  for ($x = 0; $x < count($dirArray); $x++) {
+  
+    // Set varriables
+    $name = $dirArray[$x][name];
+    $size = $dirArray[$x][size];
+    $time = date("Y-m-d H:i:s", $dirArray[$x][time]);
+  
+    if (isOdd($n)) {
+      $bg = "light-bg";
+    } else {
+      $bg = "dark-bg";
+    }
+    
+    if ($name === '..') {
+      $pathArray = explode("/","$path$name"); 
+      unset($pathArray[count($pathArray)-1]);
+      unset($pathArray[count($pathArray)-1]);
+      $dir = implode("/", $pathArray);
+    } else {
+      $dir = "$path$name";
+    }
+    
+    echo("  <div class=\"$bg\">\r\n");      
+    if ($dir == '.' || $dir == '') {
+      echo("    <a href=\"index.php\">\r\n");
+    } else {
+      echo("    <a href=\"?dir=$dir\">\r\n");
+    }
+    echo("      <img src=\"ck-lister/icons/folder.png\" />\r\n");
+    echo('      <span class="file-name">'.$name."</span>\r\n");
+    echo('      <span class="file-size">'.$size."</span>\r\n");
+    echo('      <span class="file-time">'.$time."</span>\r\n");
+    echo("    </a>\r\n");
+    echo("  </div>\r\n");
+    
+    $n++;
+    
+  }
+  
+  // List files
   for ($x = 0; $x < count($fileArray); $x++) {
 
     // Set varriables
@@ -63,10 +131,9 @@
 
     // Define file extension and the associated image
     $fileIcons = array (
-      // Video
-      'avi' => 'video.png',
-      'wmv' => 'video.png',
-      'mp4' => 'video.png',
+      // Applications
+      'exe' => 'app.png',
+      'msi' => 'app.png',
       
       // Audio
       'wav' => 'music.png',
@@ -74,21 +141,28 @@
       'mp3' => 'music.png',
       'ogg' => 'music.png',
       
-      // Images
-      'gif' => 'image.png',
-      'jpeg' => 'image.png',
-      'jpg' => 'image.png',
-      'png' => 'image.png',
-      
       // Code
       'css' => 'code.png',
       'htm' => 'code.png',
       'html' => 'code.png',
       'php' => 'code.png',
       
-      // Applications
-      'exe' => 'app.png',
-      'msi' => 'app.png',
+      // Documents
+      'doc' => 'word.png',
+      'docx' => 'word.png',
+      'odt' => 'text.png',
+      'xls' => 'excel.png',
+      
+      // Images
+      'gif' => 'image.png',
+      'jpg' => 'image.png',
+      'jpeg' => 'image.png',
+      'png' => 'image.png',
+
+      // Video
+      'avi' => 'video.png',
+      'wmv' => 'video.png',
+      'mp4' => 'video.png',
       
       // Other
       'iso' => 'cd.png',
@@ -104,26 +178,22 @@
       $icon = 'blank.png';
     }
 
-    if (isOdd($x)) {
-      echo("  <div class=\"light-bg\">\r\n");
+    if (isOdd($n)) {
+      $bg = "light-bg";
     } else {
-      echo("  <div class=\"dark-bg\">\r\n");
+      $bg = "dark-bg";
     }
 
-    if (is_dir("$path/$name")) {
-      echo("    <a href=\"?dir=$path$name\">\r\n");
-      $icon = 'folder.png';
-    } else {
-      echo("    <a href=\"$path$name\">\r\n");
-    }
-
+    echo("  <div class=\"$bg\">\r\n");
+    echo("    <a href=\"$path$name\">\r\n");
     echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
-
     echo('      <span class="file-name">'.$name."</span>\r\n");
     echo('      <span class="file-size">'.$size."KB</span>\r\n");
     echo('      <span class="file-time">'.$time."</span>\r\n");
     echo("    </a>\r\n");
     echo("  </div>\r\n");
+    
+    $n++;
   }
 ?>
   <!-- END DIRECTORY LISTING -->
@@ -135,9 +205,11 @@
         $breadCrumbs = split('/', $path);
         if(($bsize = sizeof($breadCrumbs))>0) {
           $sofar = '';
-          for($bi=0;$bi<($bsize-1);$bi++) {
-            $sofar = $sofar . $breadCrumbs[$bi] . '/';
-            echo ' &gt; <a href="'.$_SERVER['PHP_SELF'].'?dir='.$sofar.'">'.$breadCrumbs[$bi].'</a>';
+          for($x=0;$x<($bsize-1);$x++) {
+            if ($breadCrumbs[$x] != '.') {
+              $sofar = $sofar . $breadCrumbs[$x] . '/';
+              echo ' &raquo; <a href="'.$_SERVER['PHP_SELF'].'?dir='.$sofar.'">'.$breadCrumbs[$x].'</a>';
+            }
           }
         }
       ?>
