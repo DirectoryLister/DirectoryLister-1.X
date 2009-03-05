@@ -1,5 +1,5 @@
-<?php // ck-lister v0.2.0 by, Chris Kankiewicz (http://www.web-geek.com)
-  
+<?php // ck-lister v0.2.1 by, Chris Kankiewicz (http://www.web-geek.com)
+
   // Files and directories that will not be listed
   $hidden = array(
     'ck-lister',
@@ -10,27 +10,27 @@
   );
 
   // *** DO NOT EDIT ANYTHING BELOW UNLESS YOU ARE A PHP NINJA ***
-  
+
   // Get dir if set otherwise get relative directory
   if (isset($_GET['dir']) && $_GET['dir'] != '') {
     $dir = $_GET['dir'];
   } else {
     $dir = './';
   }
-  
+
   // Prevent access to files specified to be hidden
   if (in_array($dir,$hidden)) {
     $dir = './';
   }
-  
-  
+
+
   // Add trailing slash if none present
   if(substr($dir,-1,1) != '/') {
     $dir = $dir . '/';
 	}
-  
+
   $path = $path . $dir;
-  
+
   // Prevent access to parent folders
   if (substr_count($path,'../') !== 0) {
     $path = './';
@@ -39,7 +39,7 @@
   // Open directory handle for reading
   $dirHandle = @opendir($path) or die("Unable to open $path");
     while ($file = readdir($dirHandle)) {
-    
+
     if (is_dir("$path$file") && $file !== '.') {
       if ($file == '..' && !isset($_GET['dir'])) {
         continue;
@@ -47,13 +47,13 @@
         if (!in_array($file,$hidden)) {
           $dirArray[] = array (
             "name" => $file,
-            "size" => '-',
+            "size" => '',
             "time" => filemtime("$path$file")
           );
         }
       }
     }
-    
+
     if (!is_dir("$path$file") && !in_array($file,$hidden)) {
       $fileArray[] = array (
         "name" => $file,
@@ -63,7 +63,7 @@
     }
   }
   closedir($dirHandle);
-  
+
   @natcasesort($dirArray);
   @natcasesort($fileArray);
 
@@ -74,14 +74,13 @@
 
 <head>
   <title>
-    Directory listing of 
-    <?php
+    Directory listing of <?php
       if ($path == './') {
-        echo(dirname($_SERVER['PHP_SELF'])); 
+        echo(dirname($_SERVER['PHP_SELF']));
       } else {
-        echo(dirname($_SERVER['PHP_SELF'])."/$path"); 
+        echo(dirname($_SERVER['PHP_SELF'])."/$path");
       }
-    ?>
+    ?> - Powered by, CK-Lister
   </title>
   <link rel="stylesheet" type="text/css" href="ck-lister/css/reset.css" />
   <link rel="stylesheet" type="text/css" href="ck-lister/css/style.css" />
@@ -100,7 +99,7 @@
   <!-- BEGIN DIRECTORY LISTING -->
 <?php
   $n = 0; // Alternating BG color marker
-  
+
   // Remove preceding "./" from path
   if (substr($path, 0, 2) == './') {
     $pathArray = explode("/",$path);
@@ -110,44 +109,49 @@
 
   // List directories
   for ($x = 0; $x < count($dirArray); $x++) {
-  
+    
+    $icon = 'folder.png';
+
     // Set varriables
     $name = $dirArray[$x][name];
     $size = $dirArray[$x][size];
     $time = date("Y-m-d H:i:s", $dirArray[$x][time]);
-  
+    
+    // Set background class
     if (isOdd($n)) {
       $bg = "light-bg";
     } else {
       $bg = "dark-bg";
     }
-    
+
+    // Set $dir to parent folder if directory is ".."
     if ($name == '..') {
-      $pathArray = explode("/","$path$name"); 
+      $pathArray = explode("/","$path$name");
       unset($pathArray[count($pathArray)-1]);
       unset($pathArray[count($pathArray)-1]);
       $dir = implode("/",$pathArray);
+      $icon = 'back.png';
     } else {
       $dir = "$path$name";
     }
-    
-    echo("  <div class=\"$bg\">\r\n");      
+
+    echo("  <div class=\"$bg\">\r\n");
     if ($dir == '.' || $dir == '') {
       echo("    <a href=\"index.php\">\r\n");
     } else {
-      echo("    <a href=\"?dir=$dir\">\r\n");
+      echo("    <a href=\"?dir=$dir/\">\r\n");
     }
-    echo("      <img src=\"ck-lister/icons/folder.png\" />\r\n");
+    echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
     echo('      <span class="file-name">'.$name."</span>\r\n");
     echo('      <span class="file-size">'.$size."</span>\r\n");
     echo('      <span class="file-time">'.$time."</span>\r\n");
     echo("    </a>\r\n");
     echo("  </div>\r\n");
-    
+
     $n++; // Incriment BG marker
-    
+
   }
-  
+
   // List files
   for ($x = 0; $x < count($fileArray); $x++) {
 
@@ -161,40 +165,40 @@
       // Applications
       'exe' => 'app.png',
       'msi' => 'app.png',
-      
+
       // Archives
       '7z' => 'archive.png',
       'gz' => 'archive.png',
       'rar' => 'archive.png',
       'tar' => 'archive.png',
       'zip' => 'archive.png',
-      
+
       // Audio
       'wav' => 'music.png',
       'wma' => 'music.png',
       'mp3' => 'music.png',
       'ogg' => 'music.png',
-      
+
       // Code
       'css' => 'code.png',
       'htm' => 'code.png',
       'html' => 'code.png',
       'java' => 'code.png',
       'php' => 'code.png',
-      
+
       // Documents
       'doc' => 'word.png',
       'docx' => 'word.png',
       'odt' => 'text.png',
       'pdf' => 'pdf.png',
       'xls' => 'excel.png',
-      
+
       // Images
       'gif' => 'image.png',
       'jpg' => 'image.png',
       'jpeg' => 'image.png',
       'png' => 'image.png',
-      
+
       // Text
       'log' => 'text.png',
       'txt' => 'text.png',
@@ -203,7 +207,7 @@
       'avi' => 'video.png',
       'wmv' => 'video.png',
       'mp4' => 'video.png',
-      
+
       // Other
       'iso' => 'cd.png',
     );
@@ -230,8 +234,8 @@
     echo('      <span class="file-time">'.$time."</span>\r\n");
     echo("    </a>\r\n");
     echo("  </div>\r\n");
-    
-    $n++; 
+
+    $n++;
   }
 ?>
   <!-- END DIRECTORY LISTING -->
