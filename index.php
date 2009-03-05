@@ -1,4 +1,4 @@
-<?php // ck-lister v0.2.1 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.3.0 by, Chris Kankiewicz (http://www.web-geek.com)
 
   // Files and directories that will not be listed
   $hidden = array(
