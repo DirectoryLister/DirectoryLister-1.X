@@ -1,4 +1,4 @@
-<?php // ck-lister v0.3.0 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.3.1 by, Chris Kankiewicz (http://www.web-geek.com)
 
   // Files and directories that will not be listed
   $hidden = array(
@@ -71,7 +71,7 @@
 
       // Other
       'iso' => 'cd.png',
-      '.mdf' => 'cd.png',
+      'mdf' => 'cd.png',
       'msg' => 'message.png',
     );
 
@@ -88,7 +88,6 @@
   if (in_array($dir,$hidden)) {
     $dir = './';
   }
-
 
   // Add trailing slash if none present
   if(substr($dir,-1,1) != '/') {
@@ -122,8 +121,8 @@
   }
   closedir($dirHandle);
 
-  natcasesort($dirArray);
-  natcasesort($fileArray);
+  @natcasesort($dirArray);
+  @natcasesort($fileArray);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -166,82 +165,85 @@
   }
 
   // List directories
-  foreach ($dirArray as $x) {
+  if (isset($dirArray)) {
+    foreach ($dirArray as $x) {
 
-    $icon = 'folder.png';
+      $icon = 'folder.png';
 
-    // Set varriables
-    $name = $x;
-    $size = "-";
-    $time = date("Y-m-d H:i:s", filemtime("$path$x"));
+      // Set varriables
+      $name = $x;
+      $size = "-";
+      $time = date("Y-m-d H:i:s", filemtime("$path$x"));
 
-    // Set background class
-    if (isOdd($n)) {
-      $bg = "light-bg";
-    } else {
-      $bg = "dark-bg";
+      // Set background class
+      if (isOdd($n)) {
+        $bg = "light-bg";
+      } else {
+        $bg = "dark-bg";
+      }
+
+      // Set $dir to parent folder if directory is ".."
+      if ($name == '..') {
+        $pathArray = explode("/","$path$name");
+        unset($pathArray[count($pathArray)-1]);
+        unset($pathArray[count($pathArray)-1]);
+        $dir = implode("/",$pathArray);
+        $icon = 'back.png';
+      } else {
+        $dir = "$path$name";
+      }
+
+      echo("  <div class=\"$bg\">\r\n");
+      if ($dir == '.' || $dir == '') {
+        echo("    <a href=\"index.php\">\r\n");
+      } else {
+        echo("    <a href=\"?dir=$dir/\">\r\n");
+      }
+      echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
+      echo('      <span class="file-name">'.$name."</span>\r\n");
+      echo('      <span class="file-size">'.$size."</span>\r\n");
+      echo('      <span class="file-time">'.$time."</span>\r\n");
+      echo("    </a>\r\n");
+      echo("  </div>\r\n");
+
+      $n++; // Incriment BG marker
     }
-
-    // Set $dir to parent folder if directory is ".."
-    if ($name == '..') {
-      $pathArray = explode("/","$path$name");
-      unset($pathArray[count($pathArray)-1]);
-      unset($pathArray[count($pathArray)-1]);
-      $dir = implode("/",$pathArray);
-      $icon = 'back.png';
-    } else {
-      $dir = "$path$name";
-    }
-
-    echo("  <div class=\"$bg\">\r\n");
-    if ($dir == '.' || $dir == '') {
-      echo("    <a href=\"index.php\">\r\n");
-    } else {
-      echo("    <a href=\"?dir=$dir/\">\r\n");
-    }
-    echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
-    echo('      <span class="file-name">'.$name."</span>\r\n");
-    echo('      <span class="file-size">'.$size."</span>\r\n");
-    echo('      <span class="file-time">'.$time."</span>\r\n");
-    echo("    </a>\r\n");
-    echo("  </div>\r\n");
-
-    $n++; // Incriment BG marker
-
   }
 
   // List files
-  foreach ($fileArray as $x) {
+  if (isset($fileArray)) {
+    foreach ($fileArray as $x) {
 
-    // Set varriables
-    $name = $x;
-    $size = round(filesize("$path$x")/1024);
-    $time = date("Y-m-d H:i:s", filemtime("$path$x"));
+      // Set varriables
+      $name = $x;
+      $size = round(filesize("$path$x")/1024);
+      $time = date("Y-m-d H:i:s", filemtime("$path$x"));
 
-    // Set icon if of a valid extension
-		$ext = strtolower(substr($name, strrpos($name, '.')+1));
-    if($fileIcons[$ext]) {
-			$icon = $fileIcons[$ext];
-		} else {
-      $icon = 'blank.png';
+      // Set icon if of a valid extension
+      $ext = strtolower(substr($name, strrpos($name, '.')+1));
+      if($fileIcons[$ext]) {
+        $icon = $fileIcons[$ext];
+      } else {
+        $icon = 'blank.png';
+      }
+
+      if (isOdd($n)) {
+        $bg = "light-bg";
+      } else {
+        $bg = "dark-bg";
+      }
+
+      echo("  <div class=\"$bg\">\r\n");
+      echo("    <a href=\"$path$name\">\r\n");
+      echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
+      echo('      <span class="file-name">'.$name."</span>\r\n");
+      echo('      <span class="file-size">'.$size."KB</span>\r\n");
+      echo('      <span class="file-time">'.$time."</span>\r\n");
+      echo("    </a>\r\n");
+      echo("  </div>\r\n");
+
+      $n++; // Incriment BG marker
     }
-
-    if (isOdd($n)) {
-      $bg = "light-bg";
-    } else {
-      $bg = "dark-bg";
-    }
-
-    echo("  <div class=\"$bg\">\r\n");
-    echo("    <a href=\"$path$name\">\r\n");
-    echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
-    echo('      <span class="file-name">'.$name."</span>\r\n");
-    echo('      <span class="file-size">'.$size."KB</span>\r\n");
-    echo('      <span class="file-time">'.$time."</span>\r\n");
-    echo("    </a>\r\n");
-    echo("  </div>\r\n");
-
-    $n++;
   }
 ?>
   <!-- END DIRECTORY LISTING -->
