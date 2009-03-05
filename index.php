@@ -4,57 +4,68 @@
   $hidden = array(
     'ck-lister',
     'index.php',
+    'error_log',
     '.htaccess',
     '.htpasswd',
   );
 
   // *** DO NOT EDIT ANYTHING BELOW UNLESS YOU ARE A PHP NINJA ***
   
-  // Get path if set otherwise get relative path
-  if (isset($_GET['dir']) && strpos("..",$dir,0) !== 0) {
+  // Get dir if set otherwise get relative directory
+  if (isset($_GET['dir']) && $_GET['dir'] != '') {
     $dir = $_GET['dir'];
   } else {
-    $dir = '.';
-  }  
-
-  $path = $path . $dir;
-
-  if(substr($path,-1,1) != '/') {
-    $path = $path . '/';
+    $dir = './';
+  }
+  
+  // Prevent access to files specified to be hidden
+  if (in_array($dir,$hidden)) {
+    $dir = './';
+  }
+  
+  
+  // Add trailing slash if none present
+  if(substr($dir,-1,1) != '/') {
+    $dir = $dir . '/';
 	}
+  
+  $path = $path . $dir;
+  
+  // Prevent access to parent folders
+  if (substr_count($path,'../') !== 0) {
+    $path = './';
+  }
 
   // Open directory handle for reading
   $dirHandle = @opendir($path) or die("Unable to open $path");
-  if ($dirHandle = opendir($path)) {
     while ($file = readdir($dirHandle)) {
     
-      if (is_dir("$path$file") && $file !== '.') {
-        if ($file == '..' && !isset($_GET['dir'])) {
-          continue;
-        } else {
-          if (!in_array($file,$hidden)) {
-            $dirArray[] = array (
-              "name" => $file,
-              "size" => '-',
-              "time" => filemtime("$path$file")
-            );
-          }
+    if (is_dir("$path$file") && $file !== '.') {
+      if ($file == '..' && !isset($_GET['dir'])) {
+        continue;
+      } else {
+        if (!in_array($file,$hidden)) {
+          $dirArray[] = array (
+            "name" => $file,
+            "size" => '-',
+            "time" => filemtime("$path$file")
+          );
         }
       }
-      
-      if (!is_dir("$path$file") && !in_array($file,$hidden)) {
-        $fileArray[] = array (
-          "name" => $file,
-          "size" => round(filesize("$path$file")/1024),
-          "time" => filemtime("$path$file")
-        );
-      }
-      
     }
-  closedir($dirHandle);
+    
+    if (!is_dir("$path$file") && !in_array($file,$hidden)) {
+      $fileArray[] = array (
+        "name" => $file,
+        "size" => round(filesize("$path$file")/1024),
+        "time" => filemtime("$path$file")
+      );
+    }
   }
+  closedir($dirHandle);
   
-  asort($dirArray);
+  @natcasesort($dirArray);
+  @natcasesort($fileArray);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -89,6 +100,13 @@
   <!-- BEGIN DIRECTORY LISTING -->
 <?php
   $n = 0; // Alternating BG color marker
+  
+  // Remove preceding "./" from path
+  if (substr($path, 0, 2) == './') {
+    $pathArray = explode("/",$path);
+    unset($pathArray[0]);
+    $path = implode("/",$pathArray);
+  }
 
   // List directories
   for ($x = 0; $x < count($dirArray); $x++) {
@@ -108,7 +126,7 @@
       $pathArray = explode("/","$path$name"); 
       unset($pathArray[count($pathArray)-1]);
       unset($pathArray[count($pathArray)-1]);
-      $dir = implode("/", $pathArray);
+      $dir = implode("/",$pathArray);
     } else {
       $dir = "$path$name";
     }
@@ -126,7 +144,7 @@
     echo("    </a>\r\n");
     echo("  </div>\r\n");
     
-    $n++;
+    $n++; // Incriment BG marker
     
   }
   
@@ -144,6 +162,13 @@
       'exe' => 'app.png',
       'msi' => 'app.png',
       
+      // Archives
+      '7z' => 'archive.png',
+      'gz' => 'archive.png',
+      'rar' => 'archive.png',
+      'tar' => 'archive.png',
+      'zip' => 'archive.png',
+      
       // Audio
       'wav' => 'music.png',
       'wma' => 'music.png',
@@ -154,12 +179,14 @@
       'css' => 'code.png',
       'htm' => 'code.png',
       'html' => 'code.png',
+      'java' => 'code.png',
       'php' => 'code.png',
       
       // Documents
       'doc' => 'word.png',
       'docx' => 'word.png',
       'odt' => 'text.png',
+      'pdf' => 'pdf.png',
       'xls' => 'excel.png',
       
       // Images
@@ -167,6 +194,10 @@
       'jpg' => 'image.png',
       'jpeg' => 'image.png',
       'png' => 'image.png',
+      
+      // Text
+      'log' => 'text.png',
+      'txt' => 'text.png',
 
       // Video
       'avi' => 'video.png',
@@ -175,8 +206,6 @@
       
       // Other
       'iso' => 'cd.png',
-      'txt' => 'text.png',
-      'zip' => 'archive.png',
     );
 
     // Set icon if of a valid extension
@@ -202,7 +231,7 @@
     echo("    </a>\r\n");
     echo("  </div>\r\n");
     
-    $n++;
+    $n++; 
   }
 ?>
   <!-- END DIRECTORY LISTING -->
@@ -212,12 +241,12 @@
       <a href="<?=$_SERVER['PHP_SELF'];?>">Home</a>
       <?php
         $breadCrumbs = split('/', $path);
-        if(($bsize = sizeof($breadCrumbs))>0) {
-          $sofar = '';
-          for($x=0;$x<($bsize-1);$x++) {
+        if(($total = sizeof($breadCrumbs))>0) {
+          $current = '';
+          for($x=0;$x<($total-1);$x++) {
             if ($breadCrumbs[$x] != '.') {
-              $sofar = $sofar . $breadCrumbs[$x] . '/';
-              echo ' &raquo; <a href="'.$_SERVER['PHP_SELF'].'?dir='.$sofar.'">'.$breadCrumbs[$x].'</a>';
+              $current = $current . $breadCrumbs[$x] . '/';
+              echo ' &raquo; <a href="'.$_SERVER['PHP_SELF'].'?dir='.$current.'">'.$breadCrumbs[$x].'</a>';
             }
           }
         }
