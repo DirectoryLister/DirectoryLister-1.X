@@ -8,6 +8,72 @@
     '.htaccess',
     '.htpasswd',
   );
+  
+  // Define file extension and the associated image
+    $fileIcons = array (
+      // Applications
+      'app' => 'app.png',
+      'bat' => 'app.png',
+      'exe' => 'app.png',
+      'msi' => 'app.png',
+
+      // Archives
+      '7z' => 'archive.png',
+      'gz' => 'archive.png',
+      'rar' => 'archive.png',
+      'tar' => 'archive.png',
+      'zip' => 'archive.png',
+
+      // Audio
+      'aac' => 'music.png',
+      'mid' => 'music.png',
+      'midi' => 'music.png',
+      'mp3' => 'music.png',
+      'ogg' => 'music.png',
+      'wma' => 'music.png',
+      'wav' => 'music.png',
+
+      // Code
+      'c' => 'code.png',
+      'css' => 'code.png',
+      'htm' => 'code.png',
+      'html' => 'code.png',
+      'java' => 'code.png',
+      'js' => 'code.png',
+      'php' => 'code.png',
+      'pl' => 'code.png',
+      'xhtml' => 'code.png',
+      'xml' => 'code.png',
+
+      // Documents
+      'doc' => 'word.png',
+      'docx' => 'word.png',
+      'odt' => 'text.png',
+      'pdf' => 'pdf.png',
+      'xls' => 'excel.png',
+
+      // Images
+      'gif' => 'image.png',
+      'jpg' => 'image.png',
+      'jpeg' => 'image.png',
+      'png' => 'image.png',
+
+      // Text
+      'log' => 'text.png',
+      'rtf' => 'text.png',
+      'txt' => 'text.png',
+
+      // Video
+      'avi' => 'video.png',
+      'mov' => 'video.png',
+      'mp4' => 'video.png',
+      'wmv' => 'video.png',
+
+      // Other
+      'iso' => 'cd.png',
+      '.mdf' => 'cd.png',
+      'msg' => 'message.png',
+    );
 
   // *** DO NOT EDIT ANYTHING BELOW UNLESS YOU ARE A PHP NINJA ***
 
@@ -159,58 +225,6 @@
     $name = $fileArray[$x][name];
     $size = $fileArray[$x][size];
     $time = date("Y-m-d H:i:s", $fileArray[$x][time]);
-
-    // Define file extension and the associated image
-    $fileIcons = array (
-      // Applications
-      'exe' => 'app.png',
-      'msi' => 'app.png',
-
-      // Archives
-      '7z' => 'archive.png',
-      'gz' => 'archive.png',
-      'rar' => 'archive.png',
-      'tar' => 'archive.png',
-      'zip' => 'archive.png',
-
-      // Audio
-      'wav' => 'music.png',
-      'wma' => 'music.png',
-      'mp3' => 'music.png',
-      'ogg' => 'music.png',
-
-      // Code
-      'css' => 'code.png',
-      'htm' => 'code.png',
-      'html' => 'code.png',
-      'java' => 'code.png',
-      'php' => 'code.png',
-
-      // Documents
-      'doc' => 'word.png',
-      'docx' => 'word.png',
-      'odt' => 'text.png',
-      'pdf' => 'pdf.png',
-      'xls' => 'excel.png',
-
-      // Images
-      'gif' => 'image.png',
-      'jpg' => 'image.png',
-      'jpeg' => 'image.png',
-      'png' => 'image.png',
-
-      // Text
-      'log' => 'text.png',
-      'txt' => 'text.png',
-
-      // Video
-      'avi' => 'video.png',
-      'wmv' => 'video.png',
-      'mp4' => 'video.png',
-
-      // Other
-      'iso' => 'cd.png',
-    );
 
     // Set icon if of a valid extension
 		$ext = strtolower(substr($name, strrpos($name, '.')+1));
