@@ -8,7 +8,7 @@
     '.htaccess',
     '.htpasswd',
   );
-  
+
   // Define file extension and the associated image
     $fileIcons = array (
       // Applications
@@ -111,27 +111,19 @@
         continue;
       } else {
         if (!in_array($file,$hidden)) {
-          $dirArray[] = array (
-            "name" => $file,
-            "size" => '',
-            "time" => filemtime("$path$file")
-          );
+          $dirArray[] = $file;
         }
       }
     }
 
     if (!is_dir("$path$file") && !in_array($file,$hidden)) {
-      $fileArray[] = array (
-        "name" => $file,
-        "size" => round(filesize("$path$file")/1024),
-        "time" => filemtime("$path$file")
-      );
+      $fileArray[] = $file;
     }
   }
   closedir($dirHandle);
 
-  @natcasesort($dirArray);
-  @natcasesort($fileArray);
+  natcasesort($dirArray);
+  natcasesort($fileArray);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -174,15 +166,15 @@
   }
 
   // List directories
-  for ($x = 0; $x < count($dirArray); $x++) {
-    
+  foreach ($dirArray as $x) {
+
     $icon = 'folder.png';
 
     // Set varriables
-    $name = $dirArray[$x][name];
-    $size = $dirArray[$x][size];
-    $time = date("Y-m-d H:i:s", $dirArray[$x][time]);
-    
+    $name = $x;
+    $size = "-";
+    $time = date("Y-m-d H:i:s", filemtime("$path$x"));
+
     // Set background class
     if (isOdd($n)) {
       $bg = "light-bg";
@@ -219,12 +211,12 @@
   }
 
   // List files
-  for ($x = 0; $x < count($fileArray); $x++) {
+  foreach ($fileArray as $x) {
 
     // Set varriables
-    $name = $fileArray[$x][name];
-    $size = $fileArray[$x][size];
-    $time = date("Y-m-d H:i:s", $fileArray[$x][time]);
+    $name = $x;
+    $size = round(filesize("$path$x")/1024);
+    $time = date("Y-m-d H:i:s", filemtime("$path$x"));
 
     // Set icon if of a valid extension
 		$ext = strtolower(substr($name, strrpos($name, '.')+1));
