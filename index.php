@@ -1,4 +1,4 @@
-<?php // ck-lister v0.3.1 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.3.2 by, Chris Kankiewicz (http://www.web-geek.com)
 
   // Files and directories that will not be listed
   $hidden = array(
@@ -97,7 +97,9 @@
   $path = $path . $dir;
 
   // Prevent access to parent folders
-  if (substr_count($path,'../') !== 0) {
+  if (substr_count($path,'../') !== 0 
+  || substr_count($path,'<') !== 0
+  || substr_count($path,'>') !== 0) {
     $path = './';
   }
 
