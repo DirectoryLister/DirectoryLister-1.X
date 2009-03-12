@@ -1,10 +1,8 @@
-<?php // ck-lister v0.3.2 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.3.3 by, Chris Kankiewicz (http://www.web-geek.com)
 
   // Files and directories that will not be listed
   $hidden = array(
     'ck-lister',
-    'index.php',
-    'error_log',
     '.htaccess',
     '.htpasswd',
   );
@@ -122,7 +120,11 @@
     }
 
     if (!is_dir("$path$file") && !in_array($file,$hidden)) {
-      $fileArray[] = $file;
+      if ($path == './' && $file == 'index.php') {
+        continue;
+      } else {
+        $fileArray[] = $file;
+      }
     }
   }
   closedir($dirHandle);
