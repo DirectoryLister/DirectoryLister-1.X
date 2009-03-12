@@ -45,7 +45,13 @@
       'xhtml' => 'code.png',
       'xml' => 'code.png',
 
+      // Disc Images
+      'iso' => 'cd.png',
+      'mdf' => 'cd.png',
+      'nrg' => 'cd.png',
+
       // Documents
+      'csv' => 'excel.png',
       'doc' => 'word.png',
       'docx' => 'word.png',
       'odt' => 'text.png',
@@ -70,8 +76,6 @@
       'wmv' => 'video.png',
 
       // Other
-      'iso' => 'cd.png',
-      'mdf' => 'cd.png',
       'msg' => 'message.png',
     );
 
@@ -97,7 +101,7 @@
   $path = $path . $dir;
 
   // Prevent access to parent folders
-  if (substr_count($path,'../') !== 0 
+  if (substr_count($path,'../') !== 0
   || substr_count($path,'<') !== 0
   || substr_count($path,'>') !== 0) {
     $path = './';
@@ -229,6 +233,7 @@
         $icon = 'blank.png';
       }
 
+      // Set background class
       if (isOdd($n)) {
         $bg = "light-bg";
       } else {

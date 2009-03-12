@@ -50,6 +50,10 @@ body {
   text-align: right;
 }
 
+#ck-lister #header .file-size {
+  width: 118px;
+}
+
 #ck-lister .file-time {
   float: right;
   text-align: right;
