@@ -20,7 +20,7 @@ body {
 *  ROWS  *
 *********/
 #ck-lister #header {
-	border-bottom: 3px solid #000;
+	border-bottom: 2px solid #000;
 	float: left;
 	font-weight: bold;
 	padding: 0;
@@ -42,6 +42,7 @@ body {
 }
 
 #ck-lister #header .file-name {
+	margin: 1px 3px;
 	width: 492px;
 }
 
@@ -52,11 +53,19 @@ body {
 	text-align: right;
 }
 
+#ck-lister #header .file-size {
+	margin: 1px 3px;
+}
+
 #ck-lister .file-time {
 	float: right;
 	margin: 3px;
 	text-align: right;
 	width: 135px;
+}
+
+#ck-lister #header .file-time {
+	margin: 1px 3px;
 }
 
 /**********
@@ -102,13 +111,13 @@ body {
 
 #ck-footer .footer-left {
 	float: left;
-	margin: 3px;
+	margin: 1px 3px;
 	width: 78%;
 }
 
 #ck-footer .footer-right {
 	float: right;
-	margin: 3px;
+	margin: 1px 3px;
 	text-align: right;
 	width: 20%;
 }
