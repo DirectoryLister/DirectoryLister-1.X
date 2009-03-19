@@ -1,80 +1,80 @@
-<?php // ck-lister v0.3.3 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // ck-lister v0.3.4 by, Chris Kankiewicz (http://www.web-geek.com)
 
 // Files and directories that will not be listed
 $hidden = array(
-    'ck-lister',
-    '.htaccess',
-    '.htpasswd',
+	'ck-lister',
+	'.htaccess',
+	'.htpasswd',
 );
 
 // Define file extension and the associated image
 $fileIcons = array (
 // Applications
-      'app' => 'app.png',
-      'bat' => 'app.png',
-      'exe' => 'app.png',
-      'msi' => 'app.png',
+	'app' => 'app.png',
+	'bat' => 'app.png',
+	'exe' => 'app.png',
+	'msi' => 'app.png',
 
 // Archives
-      '7z' => 'archive.png',
-      'gz' => 'archive.png',
-      'rar' => 'archive.png',
-      'tar' => 'archive.png',
-      'zip' => 'archive.png',
+	'7z' => 'archive.png',
+	'gz' => 'archive.png',
+	'rar' => 'archive.png',
+	'tar' => 'archive.png',
+	'zip' => 'archive.png',
 
 // Audio
-      'aac' => 'music.png',
-      'mid' => 'music.png',
-      'midi' => 'music.png',
-      'mp3' => 'music.png',
-      'ogg' => 'music.png',
-      'wma' => 'music.png',
-      'wav' => 'music.png',
+	'aac' => 'music.png',
+	'mid' => 'music.png',
+	'midi' => 'music.png',
+	'mp3' => 'music.png',
+	'ogg' => 'music.png',
+	'wma' => 'music.png',
+	'wav' => 'music.png',
 
 // Code
-      'c' => 'code.png',
-      'css' => 'code.png',
-      'htm' => 'code.png',
-      'html' => 'code.png',
-      'java' => 'code.png',
-      'js' => 'code.png',
-      'php' => 'code.png',
-      'pl' => 'code.png',
-      'xhtml' => 'code.png',
-      'xml' => 'code.png',
+	'c' => 'code.png',
+	'css' => 'code.png',
+	'htm' => 'code.png',
+	'html' => 'code.png',
+	'java' => 'code.png',
+	'js' => 'code.png',
+	'php' => 'code.png',
+	'pl' => 'code.png',
+	'xhtml' => 'code.png',
+	'xml' => 'code.png',
 
 // Disc Images
-      'iso' => 'cd.png',
-      'mdf' => 'cd.png',
-      'nrg' => 'cd.png',
+	'iso' => 'cd.png',
+	'mdf' => 'cd.png',
+	'nrg' => 'cd.png',
 
 // Documents
-      'csv' => 'excel.png',
-      'doc' => 'word.png',
-      'docx' => 'word.png',
-      'odt' => 'text.png',
-      'pdf' => 'pdf.png',
-      'xls' => 'excel.png',
+	'csv' => 'excel.png',
+	'doc' => 'word.png',
+	'docx' => 'word.png',
+	'odt' => 'text.png',
+	'pdf' => 'pdf.png',
+	'xls' => 'excel.png',
 
 // Images
-      'gif' => 'image.png',
-      'jpg' => 'image.png',
-      'jpeg' => 'image.png',
-      'png' => 'image.png',
+	'gif' => 'image.png',
+	'jpg' => 'image.png',
+	'jpeg' => 'image.png',
+	'png' => 'image.png',
 
 // Text
-      'log' => 'text.png',
-      'rtf' => 'text.png',
-      'txt' => 'text.png',
+	'log' => 'text.png',
+	'rtf' => 'text.png',
+	'txt' => 'text.png',
 
 // Video
-      'avi' => 'video.png',
-      'mov' => 'video.png',
-      'mp4' => 'video.png',
-      'wmv' => 'video.png',
+	'avi' => 'video.png',
+	'mov' => 'video.png',
+	'mp4' => 'video.png',
+	'wmv' => 'video.png',
 
 // Other
-      'msg' => 'message.png',
+	'msg' => 'message.png',
 );
 
 // *** DO NOT EDIT ANYTHING BELOW UNLESS YOU ARE A PHP NINJA ***

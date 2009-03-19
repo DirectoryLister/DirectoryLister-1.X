@@ -1,123 +1,122 @@
 /**************
 *  CK-LISTER  *
 **************/
-
 body {
-  color: #333;
-  background: #FFF;
-  font-family: sans-serif;
-  font-size: 100%;
-  margin: 0;
-  padding: 0;
+	color: #333;
+	background: #FFF;
+	font-family: sans-serif, serif, helvetica;
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 #ck-lister {
-  font-size: .9em;
-  margin: 20px auto;
-  width: 760px;
+	font-size: .9em;
+	margin: 20px auto;
+	width: 760px;
 }
 
 /*********
 *  ROWS  *
 *********/
-
 #ck-lister #header {
-  border-bottom: 3px solid #000;
-  display: block;
-  font-weight: bold;
-  height: 15px;
-  padding: 3px;
+	border-bottom: 3px solid #000;
+	float: left;
+	font-weight: bold;
+	padding: 0;
+	width: 100%;
 }
 
 #ck-lister img {
-  border: none;
-  float: left;
-  margin-right: 3px;
-  width: 16px;
+	border: none;
+	float: left;
+	margin: 3px;
+	width: 16px;
 }
 
 #ck-lister .file-name {
-  float: left;
-  font-weight: bold;
-  margin-right: 15px;
-  width: 470px;
+	float: left;
+	font-weight: bold;
+	margin: 3px;
+	width: 470px;
+}
+
+#ck-lister #header .file-name {
+	width: 492px;
 }
 
 #ck-lister .file-size {
-  float: left;
-  margin-right: 15px;
-  width: 100px;
-  text-align: right;
-}
-
-#ck-lister #header .file-size {
-  width: 118px;
+	float: left;
+	margin: 3px;
+	width: 100px;
+	text-align: right;
 }
 
 #ck-lister .file-time {
-  float: right;
-  text-align: right;
-  width: 135px;
+	float: right;
+	margin: 3px;
+	text-align: right;
+	width: 135px;
 }
 
 /**********
 *  LINKS  *
 **********/
-
-#ck-lister .dark-bg a, #ck-lister .light-bg a {
-  border-bottom: 1px solid #3269AA;
-  color: #000;
-  cursor: pointer;
-  display: block;
-  float: left;
-  margin: 0;
-  padding: 4px 3px;
-  text-decoration: none;
+#ck-lister .dark-bg a,#ck-lister .light-bg a {
+	border-bottom: 1px solid #3269AA;
+	color: #000;
+	cursor: pointer;
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	width: 100%;
 }
 
 #ck-lister .dark-bg a {
-  background-color: #EFEFEF;
+	background-color: #EFEFEF;
 }
 
 #ck-lister .light-bg a {
-  background-color: #DEDEDE;
+	background-color: #DEDEDE;
 }
 
-#ck-lister .dark-bg a:hover, #ck-lister .light-bg a:hover {
-  background-color: #3269AA;
-  color: #FFF;
+#ck-lister .dark-bg a:hover,#ck-lister .light-bg a:hover {
+	background-color: #3269AA;
+	color: #FFF;
 }
 
 /***********
 *  FOOTER  *
 ***********/
-
 #ck-footer {
-  color: #999;
-  font-size: .8em;
-  height: 20px;
-  margin: 0;
-  padding: 5px 0;
-  width: 100%;
+	color: #999;
+	float: left;
+	font-size: .8em;
+	height: 20px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
 }
 
 #ck-footer .footer-left {
-  float: left;
-  margin: 3px;
-  width: 78%;
+	float: left;
+	margin: 3px;
+	width: 78%;
 }
 
 #ck-footer .footer-right {
-  float: right;
-  margin: 3px;
-  text-align: right;
-  width: 20%;
+	float: right;
+	margin: 3px;
+	text-align: right;
+	width: 20%;
 }
 
 #ck-footer a {
-  color: #999;
+	color: #999;
 }
 
 #ck-footer a:hover {
-  color: #3269AA;
+	color: #3269AA;
 }
