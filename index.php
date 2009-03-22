@@ -62,6 +62,11 @@ $fileIcons = array (
 	'jpeg' => 'image.png',
 	'png' => 'image.png',
 
+// Scripts
+	'bat' => 'terminal.png',
+	'cmd' => 'terminal.png',
+	'sh' => 'terminal.png',
+
 // Text
 	'log' => 'text.png',
 	'rtf' => 'text.png',
