@@ -1,8 +1,8 @@
-<?php // ck-lister v0.3.4 by, Chris Kankiewicz (http://www.web-geek.com)
+<?php // Director Lister v1.0.0 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
-	'ck-lister',
+	'.directory-lister',
 	'.htaccess',
 	'.htpasswd',
 );
@@ -149,13 +149,13 @@ if ($path == './') {
 } else {
 	echo(dirname($_SERVER['PHP_SELF'])."/$path");
 }
-?> - Powered by, CK-Lister</title>
-<link rel="stylesheet" type="text/css" href="ck-lister/css/style.css" />
+?> - Powered by, Directory Lister</title>
+<link rel="stylesheet" type="text/css" href=".directory-lister/css/style.css" />
 </head>
 
 <body>
 
-<div id="ck-lister">
+<div id="dir-lister">
 
 <div id="header"><span class="file-name">File</span> <span
 	class="file-size">Size</span> <span class="file-time">Last Modified</span>
@@ -206,7 +206,7 @@ if (isset($dirArray)) {
 		} else {
 			echo("    <a href=\"?dir=$dir/\">\r\n");
 		}
-		echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
+		echo("      <img src=\".directory-lister/icons/$icon\" />\r\n");
 		echo('      <span class="file-name">'.$name."</span>\r\n");
 		echo('      <span class="file-size">'.$size."</span>\r\n");
 		echo('      <span class="file-time">'.$time."</span>\r\n");
@@ -243,7 +243,7 @@ if (isset($fileArray)) {
 
 		echo("  <div class=\"$bg\">\r\n");
 		echo("    <a href=\"$path$name\">\r\n");
-		echo("      <img src=\"ck-lister/icons/$icon\" />\r\n");
+		echo("      <img src=\".directory-lister/icons/$icon\" />\r\n");
 		echo('      <span class="file-name">'.$name."</span>\r\n");
 		echo('      <span class="file-size">'.$size."KB</span>\r\n");
 		echo('      <span class="file-time">'.$time."</span>\r\n");
@@ -255,7 +255,7 @@ if (isset($fileArray)) {
 }
 ?><!-- END DIRECTORY LISTING -->
 
-<div id="ck-footer"><span class="footer-left"> <a
+<div id="lister-footer"><span class="footer-left"> <a
 	href="<?=$_SERVER['PHP_SELF'];?>">Home</a> <?php
 	$breadCrumbs = split('/', $path);
 	if(($total = sizeof($breadCrumbs))>0) {
@@ -268,7 +268,7 @@ if (isset($fileArray)) {
 		}
 	}
 	?> </span> <span class="footer-right"> Powered by, <a
-	href="http://github.com/PHLAK/ck-lister">CK-Lister</a> </span></div>
+	href="http://www.directorylister.com">Directory Lister</a> </span></div>
 
 </div>
 

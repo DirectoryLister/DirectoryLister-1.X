@@ -5,8 +5,7 @@ PHP fancy directory lister.
 
 Installation
 ------------------------------------------------------------------
-To install CK-Lister, simply upload index.php and the ck-lister folder to the 
-directory that you would like to have listed.
+Directory Lister is a simple PHP based script created to let you list the contents of a directory and all sub directories and allow you to navigate there within. Just download and install Directory Lister to any web directory and have immediate access to all files and sub-direcories under that directory.
 
 
 Copyright (C) 2009 Chris Kankiewicz <Chris@ChrisKankiewicz.com>
