@@ -77,6 +77,7 @@ $fileIcons = array (
 	'mov' => 'video.png',
 	'mp4' => 'video.png',
 	'wmv' => 'video.png',
+	'swf' => 'flash.png',
 
 // Other
 	'msg' => 'message.png',
