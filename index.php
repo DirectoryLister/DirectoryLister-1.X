@@ -1,4 +1,4 @@
-<?php // Director Lister v1.0.1 by, Chris Kankiewicz (http://www.directorylister.com)
+<?php // Director Lister v1.0.2 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
@@ -110,7 +110,8 @@ $path = $path . $dir;
 // Prevent access to parent folders
 if (substr_count($path,'../') !== 0
 || substr_count($path,'<') !== 0
-|| substr_count($path,'>') !== 0) {
+|| substr_count($path,'>') !== 0
+|| substr_count($path,'/',0,1) !== 0) {
 	$path = './';
 }
 
