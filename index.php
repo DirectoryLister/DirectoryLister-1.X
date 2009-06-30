@@ -1,4 +1,4 @@
-<?php // Director Lister v1.0.0 by, Chris Kankiewicz (http://www.directorylister.com)
+<?php // Director Lister v1.0.1 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
@@ -40,6 +40,7 @@ $fileIcons = array (
 	'js' => 'code.png',
 	'php' => 'code.png',
 	'pl' => 'code.png',
+	'py' => 'code.png',
 	'xhtml' => 'code.png',
 	'xml' => 'code.png',
 
@@ -57,10 +58,12 @@ $fileIcons = array (
 	'xls' => 'excel.png',
 
 // Images
+	'bmp' => 'image.png',
 	'gif' => 'image.png',
 	'jpg' => 'image.png',
 	'jpeg' => 'image.png',
 	'png' => 'image.png',
+	'tga' => 'image.png',
 
 // Scripts
 	'bat' => 'terminal.png',
