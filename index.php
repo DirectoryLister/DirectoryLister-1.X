@@ -1,4 +1,4 @@
-<?php // Directory Lister v1.0.3 by, Chris Kankiewicz (http://www.directorylister.com)
+<?php // Directory Lister v1.0.4 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
@@ -114,6 +114,9 @@ if (substr_count($path,'.',0,1) !== 0
 || substr_count($path,'>') !== 0
 || substr_count($path,'/',0,1) !== 0) {
 	$path = './';
+}else{
+	// Should stop all url wrappers (Thanks to Hexatex)
+	$path = './'.$path;
 }
 
 // Open directory handle for reading
@@ -261,7 +264,8 @@ if (isset($fileArray)) {
 }
 ?><!-- END DIRECTORY LISTING -->
 
-<div id="lister-footer"><span class="footer-left"> <a
+<div id="lister-footer">
+	<span class="footer-left"> <a
 	href="<?=$_SERVER['PHP_SELF'];?>">Home</a> <?php
 	$breadCrumbs = split('/', $path);
 	if(($total = sizeof($breadCrumbs))>0) {
@@ -273,17 +277,17 @@ if (isset($fileArray)) {
 			}
 		}
 	}
-	?> </span> <span class="footer-right"> Powered by, <a
-	href="http://www.directorylister.com">Directory Lister</a> </span></div>
+	?> </span>
+	<span class="footer-right"> Powered by, <a href="http://www.directorylister.com">Directory Lister</a> </span></div>
 
 </div>
 
 </body>
 </html>
 
-	<?php
-	// *** FUNCTIONS ***
-	function isOdd($number) {
-		return $number & 1; // 0 = even, 1 = odd
-	}
-	?>
+<?php
+// *** FUNCTIONS ***
+function isOdd($number) {
+	return $number & 1; // 0 = even, 1 = odd
+}
+?>
