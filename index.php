@@ -1,4 +1,4 @@
-<?php // Directory Lister v1.0.4 by, Chris Kankiewicz (http://www.directorylister.com)
+<?php // Directory Lister v1.0.5 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
@@ -159,6 +159,8 @@ if ($path == './') {
 	echo(dirname($_SERVER['PHP_SELF'])."/$path");
 }
 ?> - Powered by, Directory Lister</title>
+
+<link rel="shortcut icon" href=".directory-lister/icons/favicon.png" />
 <link rel="stylesheet" type="text/css" href=".directory-lister/css/style.css" />
 </head>
 
