@@ -1,4 +1,4 @@
-<?php // Directory Lister v1.0.6 by, Chris Kankiewicz (http://www.directorylister.com)
+<?php // Directory Lister v1.0.7 by, Chris Kankiewicz (http://www.directorylister.com)
 
 // Files and directories that will not be listed
 $hidden = array(
@@ -268,7 +268,7 @@ if (isset($fileArray)) {
 
 <div id="lister-footer">
 	<span class="footer-left"> <a
-	href="<?=$_SERVER['SCRIPT_NAME'];?>">Home</a> <?php
+	href="<?php echo $_SERVER['SCRIPT_NAME']; ?>">Home</a> <?php
 	$breadCrumbs = split('/', $path);
 	if(($total = sizeof($breadCrumbs))>0) {
 		$current = '';
